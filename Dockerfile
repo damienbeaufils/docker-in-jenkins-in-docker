@@ -1,5 +1,8 @@
 FROM jenkins/jenkins:lts
 
+# Declare mount point for Docker (which is in Docker)
+VOLUME /var/lib/docker
+
 # Configure Jenkins plugins installation
 COPY plugins.txt /usr/share/jenkins/ref/plugins.txt
 RUN /usr/local/bin/install-plugins.sh < /usr/share/jenkins/ref/plugins.txt
