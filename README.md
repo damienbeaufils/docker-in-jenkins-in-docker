@@ -22,6 +22,17 @@ docker run --privileged -it -p 8080:8080 docker-in-jenkins-in-docker
 ```
 * Open Jenkins at `http://localhost:8080/`
 
+## Pitfall with DNS
+
+If you have a specific DNS configuration (like `nameserver` and `search` entries in `/etc/resolv.conf` configuration), you should forward this DNS configuration to the Docker daemon.
+To do this, you have to create and configure `/etc/docker/daemon.json` file and specify `dns` and `dns-search` options.
+For example, you can add these lines to your Dockerfile after the Docker installation:
+```
+RUN mkdir -p /etc/docker
+RUN touch /etc/docker/daemon.json
+RUN echo '{"dns":["8.8.8.8","a.b.c.d"],"dns-search":["search1.domain","search2.domain"]}' > /etc/docker/daemon.json
+```
+
 ## See also
 
 * https://github.com/jpetazzo/dind
